@@ -9,7 +9,12 @@ router = APIRouter(
     tags=["Posts"]
 )
 
-@router.post("/", response_model=PostResponse)
+@router.post("/create", response_model=PostResponse)
 def create_post(post: PostBase, db: Session = Depends(get_db)):
     new_post = db_post.create(db, post)
     return new_post
+
+@router.get("/all", response_model=list[PostResponse])
+def get_all_posts(db: Session = Depends(get_db)):
+    posts = db_post.get_all(db)
+    return posts
