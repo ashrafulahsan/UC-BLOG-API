@@ -18,3 +18,11 @@ def create_post(post: PostBase, db: Session = Depends(get_db)):
 def get_all_posts(db: Session = Depends(get_db)):
     posts = db_post.get_all(db)
     return posts
+
+@router.delete("/delete/{post_id}")
+def delete_post(post_id: int, db: Session = Depends(get_db)):
+    result = db_post.delete(db, post_id)
+    if result is True:
+        return {"message": "Post deleted successfully"}
+    else:
+        raise HTTPException(status_code=404, detail="Post not found")
