@@ -7,7 +7,7 @@ class PostBase(BaseModel):
     image_url: str | None = None
     author: str
 
-class PostDisplay(PostBase):
+class PostResponse(PostBase):
     id: int
     title: str
     content: str

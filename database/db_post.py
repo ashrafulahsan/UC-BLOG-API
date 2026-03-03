@@ -1,0 +1,19 @@
+from routers.schemas import PostBase
+from sqlalchemy.orm.session import Session
+from database.models import DBPost
+import datetime
+
+def create(db: Session, post: PostBase):
+    db_post = DBPost(
+        title=post.title,
+        content=post.content,
+        image_url=post.image_url,
+        author=post.author,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now()
+    )
+    db.add(db_post)
+    db.commit()
+    db.refresh(db_post)
+    return db_post
+
